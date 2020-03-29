@@ -1,27 +1,67 @@
-var nowMoment = moment().format("dddd, MMMM Do YYYY");
-var currentDay = $("#currentDay").text(nowMoment);
-
 var nowHour = moment().hour();
+var nowMoment = moment().format("dddd, MMMM Do YYYY");
 
-// var hourVals = parseInt($(".row").each().attr("id"));
-// console.log(hourVals);
+$("#currentDay").text(nowMoment);
+$(".mb-3").each(setBGColor);
+$(".form-control").each(loadPlanner);
 
-// // setColor();
-// console.log(typeof(parseInt($(".row").attr("id"))));
-  
-function setBGColor() {
-  var value = parseInt(this.id);
-  console.log(value);
-  if (value < nowHour) {
-    $(this).addClass("past");
-    console.log($(this));
-  } else if (value === nowHour) {
-    $(this).addClass("present");
-    console.log($(this));
-  } else {
-    $(this).addClass("future");
-    console.log($(this));
+function loadPlanner() {
+  var keyname = this.id;
+  console.log(keyname);
+  console.log(typeof(keyname));
+  var storedPlanner = JSON.parse(localStorage.getItem(keyname));
+  if (storedPlanner !== null) {
+    $(this).text(storedPlanner);
+    console.log(storedPlanner);
   }
 };
 
-$(".mb-3").each(setBGColor);
+function setBGColor() {
+  var value = parseInt(this.id);
+  if (value < nowHour) {
+    $(this).addClass("past");
+  } else if (value === nowHour) {
+    $(this).addClass("present");
+  } else {
+    $(this).addClass("future");
+  }
+};
+
+// function savePlanner(event) {
+//   event.preventDefault
+//   // Stringify and set "todos" key in localStorage to todos array
+//   var plannerText = $.trim(keyname).val();
+//   console.log(plannerText);
+//   if (plannerText != "") {
+//     // Show alert dialog if value is not blank
+//     alert(plannerText);
+//   }
+  
+//   localStorage.setItem(keyname, JSON.stringify(plannerText));
+// };
+
+
+
+$(".mb-3").on("click", function(event) {
+  event.preventDefault();
+
+  var keyname = $(this).children(".form-control").attr("id");
+  var value = $(this).children(".form-control").val();
+  var trimmedVal = $.trim(value);
+
+  if (!trimmedVal) {
+    alert("Please enter an event to save!")
+  } else {
+    localStorage.setItem(keyname, JSON.stringify(trimmedVal));
+    alert("Planner updated!")
+  }
+  
+  console.log(keyname);
+  console.log(value);
+  console.log(trimmedVal);
+
+
+
+});
+
+console.log($("textarea").val());
