@@ -3,6 +3,7 @@ var nowHour = moment().hour();
 var nowMoment = moment().format("dddd, MMMM Do YYYY");
 
 
+// Sets time, planner colors, and planner schedule:
 $("#currentDay").text(nowMoment);
 $(".mb-3").each(setBGColor);
 $(".form-control").each(loadPlanner);
@@ -53,4 +54,31 @@ $(".mb-3").on("click", function(e) {
       alert("Planner updated!");
     }
   }
+});
+
+// Deletes all planner items from DOM and localStorage:
+$("#clearBtn").on("click", function(e) {
+  e.preventDefault();
+  var confirmClear = confirm("Are you sure you want to clear all planner entries? (This cannot be undone)");
+  if (confirmClear) {
+    function clearAll() {
+      var keyname = this.id;
+      var clearedData = "";
+      $(this).val(clearedData);
+      localStorage.setItem(keyname, JSON.stringify(clearedData));
+    }
+    $(".form-control").each(clearAll);
+  };
+});
+
+// Saves all entries to localStorage:
+$("#saveAllBtn").on("click", function(e) {
+  e.preventDefault();
+  function saveAll() {
+    var keyname = $(this).attr("id");
+    var value = $.trim($(this).val());
+    localStorage.setItem(keyname, JSON.stringify(value));
+  }
+  $(".form-control").each(saveAll);
+  alert("All planner entries saved!");
 });
