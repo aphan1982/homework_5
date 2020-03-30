@@ -1,6 +1,6 @@
 /* ELEMENT STYLES */
 body {
-  font-family: 'Open Sans', sans-serif;
+  font-family: 'Barlow Condensed', sans-serif;
   font-size: 16px;
   line-height: 1;
 }
@@ -8,9 +8,10 @@ body {
 footer {
   background-color: transparent;
   border-radius: 0;
-  border-top: 10px solid black;
+  border-top: 10px solid rgb(88, 88, 88);
   color: black;
   height: 4em;
+  margin-top: 16px;
   text-align: center;
 }
 
@@ -37,10 +38,13 @@ textarea {
   color: white;
 }
 
+.grayText {
+  color: rgb(88, 88, 88);
+}
+
 .hour {
   border-bottom-left-radius: 15px;
   border-top-left-radius: 15px;
-  color: #e68507;
 }
 
 .input-group-append, .input-group-prepend {
@@ -49,10 +53,14 @@ textarea {
 
 .jumbotron {
   background-color: transparent;
-  border-bottom: 10px solid black;
+  border-bottom: 10px solid rgb(88, 88, 88);
   border-radius: 0;
   color: black;
   text-align: center;
+}
+
+.orangeText {
+  color: #e68507;;
 }
 
 .past {

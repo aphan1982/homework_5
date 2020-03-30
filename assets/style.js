@@ -1,21 +1,23 @@
+// VARIABLES: (time received from moment.js)
 var nowHour = moment().hour();
 var nowMoment = moment().format("dddd, MMMM Do YYYY");
+
 
 $("#currentDay").text(nowMoment);
 $(".mb-3").each(setBGColor);
 $(".form-control").each(loadPlanner);
 
+// FUNCTIONS:
+// Accesses localStorage to display data entered in each $(".form-control") from previous sessions:
 function loadPlanner() {
   var keyname = this.id;
-  console.log(keyname);
-  console.log(typeof(keyname));
   var storedPlanner = JSON.parse(localStorage.getItem(keyname));
   if (storedPlanner !== null) {
     $(this).text(storedPlanner);
-    console.log(storedPlanner);
   }
 };
 
+// Compares 24-hr clock value for each timeblock against current time and color-codes each timeblock as gray (past), coral (present), and green (future):
 function setBGColor() {
   var value = parseInt(this.id);
   if (value < nowHour) {
@@ -27,41 +29,28 @@ function setBGColor() {
   }
 };
 
-// function savePlanner(event) {
-//   event.preventDefault
-//   // Stringify and set "todos" key in localStorage to todos array
-//   var plannerText = $.trim(keyname).val();
-//   console.log(plannerText);
-//   if (plannerText != "") {
-//     // Show alert dialog if value is not blank
-//     alert(plannerText);
-//   }
-  
-//   localStorage.setItem(keyname, JSON.stringify(plannerText));
-// };
-
-
-
-$(".mb-3").on("click", function(event) {
-  event.preventDefault();
-
-  var keyname = $(this).children(".form-control").attr("id");
-  var value = $(this).children(".form-control").val();
-  var trimmedVal = $.trim(value);
-
-  if (!trimmedVal) {
-    alert("Please enter an event to save!")
-  } else {
-    localStorage.setItem(keyname, JSON.stringify(trimmedVal));
-    alert("Planner updated!")
+// When a $(".saveBtn") is clicked, data in $(".form-control") (if any) are saved in localStorage:
+$(".mb-3").on("click", function(e) {
+  e.preventDefault();
+  // Verifies that save button was clicked:
+  if (e.target && e.target.matches(".saveBtn")) {
+    // Takes <textarea> data and formats for localStorage:
+    var thisField = $(this).children(".form-control");
+    var keyname = thisField.attr("id");
+    var value = $.trim(thisField.val());
+    if (!value) { // Prevents unwanted clear:
+      blank = confirm("Are you sure you'd like to clear this hour?");
+      if (blank) {
+        localStorage.setItem(keyname, JSON.stringify(value));
+      } else { // Restores old data:
+        var restoreEntry = JSON.parse(localStorage.getItem(keyname));
+        if (restoreEntry !== null) {
+          thisField.val(restoreEntry);
+        }
+      }
+    } else { // Sets new data:
+      localStorage.setItem(keyname, JSON.stringify(value));
+      alert("Planner updated!");
+    }
   }
-  
-  console.log(keyname);
-  console.log(value);
-  console.log(trimmedVal);
-
-
-
 });
-
-console.log($("textarea").val());
