@@ -1,7 +1,7 @@
 # 05 Third-Party APIs: Work Day Scheduler
 
 <!-- //PURPOSE & FUNCTIONALITY OF APPLET// -->
-[This applet](https://aphan1982.github.io/homework_5/): 
+This applet [(click here)](https://aphan1982.github.io/homework_5/): 
 
 ![a relative link](./assets/images/comprehensive_view.png "comprehensive view of deployed site")
 
